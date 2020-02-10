@@ -46,6 +46,10 @@ public class User extends DateAudit {
     @Size(max = 100)
     private String password;
 
+    @NotBlank
+    @Size(max = 15)
+    private String contact;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -56,10 +60,11 @@ public class User extends DateAudit {
 
     }
 
-    public User(String name, String username, String email, String password) {
+    public User(String name, String username, String email, String password, String contact) {
         this.name = name;
         this.username = username;
         this.email = email;
+        this.contact = contact;
         this.password = password;
     }
 
@@ -109,5 +114,13 @@ public class User extends DateAudit {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
     }
 }
