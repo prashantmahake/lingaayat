@@ -62,4 +62,16 @@ public class UserController {
 
     }
 
+    @GetMapping("/user/get/personalDetails")
+    @PreAuthorize("hasRole('USER')")
+    public UserPersonalDetails getUserPersonalDetails(@CurrentUser UserPrincipal currentUser){
+
+        User user = userRepository.findByEmail(currentUser.getEmail());
+
+
+
+        return userPersonalDetailsRepository.findByUser(user);
+    }
+
+
 }
