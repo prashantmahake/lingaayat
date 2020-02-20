@@ -36,10 +36,8 @@ public class UserPersonalDetails {
     private MaritalStatus maritalStatus;
 
     @JsonIgnore
-    @OneToOne
-    @JoinTable(name="user_personal_map",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_personal_id"))
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
     public UserPersonalDetails() {
