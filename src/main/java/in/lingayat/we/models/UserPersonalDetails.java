@@ -37,9 +37,9 @@ public class UserPersonalDetails {
 
     @JsonIgnore
     @OneToOne
-    @JoinTable(name="users",
-            joinColumns = @JoinColumn(name = "user_personal_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @JoinTable(name="user_personal_map",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_personal_id"))
     private User user;
 
     public UserPersonalDetails() {
