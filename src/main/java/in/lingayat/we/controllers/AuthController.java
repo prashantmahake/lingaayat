@@ -3,7 +3,7 @@ package in.lingayat.we.controllers;
 
 import in.lingayat.we.exceptions.AppException;
 import in.lingayat.we.models.Role;
-import in.lingayat.we.models.RoleName;
+import in.lingayat.we.models.enums.RoleName;
 import in.lingayat.we.models.User;
 import in.lingayat.we.payload.ApiResponse;
 import in.lingayat.we.payload.JwtAuthenticationResponse;

@@ -1,0 +1,11 @@
+package in.lingayat.we.models.enums;
+
+public enum Relation {
+    RELATION_FATHER,
+    RELATION_MOTHER,
+    RELATION_SIBLING,
+    RELATION_GRANDFATHER,
+    RELATION_GRANDMOTHER,
+    RELATION_MATERNAL,
+    RELATION_PATERNAL
+}

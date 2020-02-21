@@ -1,4 +1,4 @@
-package in.lingayat.we.models;
+package in.lingayat.we.models.enums;
 
 public enum MaritalStatus {
     MARITAL_STATUS_MARRIED,

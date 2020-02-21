@@ -1,4 +1,4 @@
-package in.lingayat.we.models;
+package in.lingayat.we.models.enums;
 
 public enum  RoleName {
     ROLE_USER,

@@ -1,6 +1,9 @@
 package in.lingayat.we.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import in.lingayat.we.models.enums.Complexion;
+import in.lingayat.we.models.enums.Gender;
+import in.lingayat.we.models.enums.MaritalStatus;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
