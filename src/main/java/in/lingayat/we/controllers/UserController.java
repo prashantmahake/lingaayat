@@ -41,6 +41,9 @@ public class UserController {
     @Autowired
     private UserFamilyRepository userFamilyRepository;
 
+    @Autowired
+    private UserAdditionalRepository userAdditionalRepository;
+
     @GetMapping("/user/me")
     @PreAuthorize("hasRole('USER')")
     public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
@@ -50,12 +53,12 @@ public class UserController {
 
     @PostMapping("/user/save/personalDetails")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> savePersonalDetails(@CurrentUser UserPrincipal currentUser, @RequestBody UserPersonalDetails userPersonalDetails){
+    public ResponseEntity<?> savePersonalDetails(@CurrentUser UserPrincipal currentUser, @RequestBody UserPersonalDetails userPersonalDetails) {
 
         User user = userRepository.findByEmail(currentUser.getEmail());
         UserPersonalDetails checkIfExists = userPersonalDetailsRepository.findByUser(user);
 
-        if(user != null && checkIfExists!=null){
+        if (user != null && checkIfExists != null) {
             userPersonalDetails.setUser(user);
             userPersonalDetails.setId(checkIfExists.getId());
             userPersonalDetailsRepository.save(userPersonalDetails);
@@ -66,8 +69,7 @@ public class UserController {
 
             return ResponseEntity.created(location).body(new ApiResponse(true, "Personal details updated against user "));
 
-        }
-        else if(checkIfExists == null && user !=null){
+        } else if (checkIfExists == null && user != null) {
             userPersonalDetails.setUser(user);
             userPersonalDetailsRepository.save(userPersonalDetails);
 
@@ -77,8 +79,7 @@ public class UserController {
 
             return ResponseEntity.created(location).body(new ApiResponse(true, "Personal details added against new user "));
 
-        }
-        else{
+        } else {
             return new ResponseEntity<>(new ApiResponse(false, "No user found"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
@@ -87,10 +88,9 @@ public class UserController {
 
     @GetMapping("/user/get/personalDetails")
     @PreAuthorize("hasRole('USER')")
-    public UserPersonalDetails getUserPersonalDetails(@CurrentUser UserPrincipal currentUser){
+    public UserPersonalDetails getUserPersonalDetails(@CurrentUser UserPrincipal currentUser) {
 
         User user = userRepository.findByEmail(currentUser.getEmail());
-
 
 
         return userPersonalDetailsRepository.findByUser(user);
@@ -98,12 +98,12 @@ public class UserController {
 
     @PostMapping("/user/save/educationalDetails")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> saveEducationalDetails(@CurrentUser UserPrincipal currentUser, @RequestBody UserEducationalDetails userEducationalDetails){
+    public ResponseEntity<?> saveEducationalDetails(@CurrentUser UserPrincipal currentUser, @RequestBody UserEducationalDetails userEducationalDetails) {
 
         User user = userRepository.findByEmail(currentUser.getEmail());
         UserEducationalDetails checkIfExists = userEducationalRepository.findByUser(user);
 
-        if(user != null && checkIfExists!=null){
+        if (user != null && checkIfExists != null) {
             userEducationalDetails.setUser(user);
             userEducationalDetails.setId(checkIfExists.getId());
             userEducationalRepository.save(userEducationalDetails);
@@ -114,8 +114,7 @@ public class UserController {
 
             return ResponseEntity.created(location).body(new ApiResponse(true, "Educational details updated against user "));
 
-        }
-        else if(checkIfExists == null && user !=null){
+        } else if (checkIfExists == null && user != null) {
             userEducationalDetails.setUser(user);
             userEducationalRepository.save(userEducationalDetails);
 
@@ -125,8 +124,7 @@ public class UserController {
 
             return ResponseEntity.created(location).body(new ApiResponse(true, "Educational details added against new user "));
 
-        }
-        else{
+        } else {
             return new ResponseEntity<>(new ApiResponse(false, "No user found"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
@@ -135,7 +133,7 @@ public class UserController {
 
     @GetMapping("/user/get/educationalDetails")
     @PreAuthorize("hasRole('USER')")
-    public UserEducationalDetails getUserEducationalDetails(@CurrentUser UserPrincipal currentUser){
+    public UserEducationalDetails getUserEducationalDetails(@CurrentUser UserPrincipal currentUser) {
 
         User user = userRepository.findByEmail(currentUser.getEmail());
         return userEducationalRepository.findByUser(user);
@@ -143,12 +141,12 @@ public class UserController {
 
     @PostMapping("/user/save/professionalDetails")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> saveProfessionalDetails(@CurrentUser UserPrincipal currentUser, @RequestBody UserProfessionalDetails userProfessionalDetails){
+    public ResponseEntity<?> saveProfessionalDetails(@CurrentUser UserPrincipal currentUser, @RequestBody UserProfessionalDetails userProfessionalDetails) {
 
         User user = userRepository.findByEmail(currentUser.getEmail());
         UserProfessionalDetails checkIfExists = userProfessionalDetailsRepository.findByUser(user);
 
-        if(user != null && checkIfExists!=null){
+        if (user != null && checkIfExists != null) {
             userProfessionalDetails.setUser(user);
             userProfessionalDetails.setId(checkIfExists.getId());
             userProfessionalDetailsRepository.save(userProfessionalDetails);
@@ -159,8 +157,7 @@ public class UserController {
 
             return ResponseEntity.created(location).body(new ApiResponse(true, "Professional details updated against user "));
 
-        }
-        else if(checkIfExists == null && user !=null){
+        } else if (checkIfExists == null && user != null) {
             userProfessionalDetails.setUser(user);
             userProfessionalDetailsRepository.save(userProfessionalDetails);
 
@@ -170,8 +167,7 @@ public class UserController {
 
             return ResponseEntity.created(location).body(new ApiResponse(true, "Professional details added against new user "));
 
-        }
-        else{
+        } else {
             return new ResponseEntity<>(new ApiResponse(false, "No user found"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
@@ -180,7 +176,7 @@ public class UserController {
 
     @GetMapping("/user/get/professionalDetails")
     @PreAuthorize("hasRole('USER')")
-    public UserProfessionalDetails getUserProfessionalDetails(@CurrentUser UserPrincipal currentUser){
+    public UserProfessionalDetails getUserProfessionalDetails(@CurrentUser UserPrincipal currentUser) {
 
         User user = userRepository.findByEmail(currentUser.getEmail());
         return userProfessionalDetailsRepository.findByUser(user);
@@ -188,35 +184,33 @@ public class UserController {
 
     @PostMapping("/user/save/medicalDetails")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> saveMedicalDetails(@CurrentUser UserPrincipal currentUser, @RequestBody UserMedicalDetails userMedicalDetails){
+    public ResponseEntity<?> saveMedicalDetails(@CurrentUser UserPrincipal currentUser, @RequestBody UserMedicalDetails userMedicalDetails) {
 
         User user = userRepository.findByEmail(currentUser.getEmail());
         UserMedicalDetails checkIfExists = userMedicalRepository.findByUser(user);
 
-        if(user != null && checkIfExists!=null){
+        if (user != null && checkIfExists != null) {
             userMedicalDetails.setUser(user);
             userMedicalDetails.setId(checkIfExists.getId());
             userMedicalRepository.save(userMedicalDetails);
 
             URI location = ServletUriComponentsBuilder
-                    .fromCurrentContextPath().path("/user/save/professionalDetails")
+                    .fromCurrentContextPath().path("/user/save/medicalDetails")
                     .buildAndExpand(currentUser.getUsername()).toUri();
 
-            return ResponseEntity.created(location).body(new ApiResponse(true, "Professional details updated against user "));
+            return ResponseEntity.created(location).body(new ApiResponse(true, "Medical details updated against user "));
 
-        }
-        else if(checkIfExists == null && user !=null){
+        } else if (checkIfExists == null && user != null) {
             userMedicalDetails.setUser(user);
             userMedicalRepository.save(userMedicalDetails);
 
             URI location = ServletUriComponentsBuilder
-                    .fromCurrentContextPath().path("/user/save/professionalDetails")
+                    .fromCurrentContextPath().path("/user/save/medicalDetails")
                     .buildAndExpand(currentUser.getUsername()).toUri();
 
-            return ResponseEntity.created(location).body(new ApiResponse(true, "Professional details added against new user "));
+            return ResponseEntity.created(location).body(new ApiResponse(true, "Medical details added against new user "));
 
-        }
-        else{
+        } else {
             return new ResponseEntity<>(new ApiResponse(false, "No user found"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
@@ -225,7 +219,7 @@ public class UserController {
 
     @GetMapping("/user/get/medicalDetails")
     @PreAuthorize("hasRole('USER')")
-    public UserMedicalDetails getUserMedicalDetails(@CurrentUser UserPrincipal currentUser){
+    public UserMedicalDetails getUserMedicalDetails(@CurrentUser UserPrincipal currentUser) {
 
         User user = userRepository.findByEmail(currentUser.getEmail());
         return userMedicalRepository.findByUser(user);
@@ -233,13 +227,13 @@ public class UserController {
 
     @PostMapping("/user/save/userFamilyDetails")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> saveFamilyDetails(@CurrentUser UserPrincipal currentUser, @RequestBody UserFamilyDetails userFamilyDetails){
+    public ResponseEntity<?> saveFamilyDetails(@CurrentUser UserPrincipal currentUser, @RequestBody UserFamilyDetails userFamilyDetails) {
 
         User user = userRepository.findByEmail(currentUser.getEmail());
         UserFamilyDetails checkIfExists = userFamilyRepository.
                 findByUserAndFirstNameAndLastName(user, userFamilyDetails.getFirstName(), userFamilyDetails.getLastName());
 
-        if(user != null && checkIfExists!=null){
+        if (user != null && checkIfExists != null) {
             userFamilyDetails.setUser(user);
             userFamilyDetails.setId(checkIfExists.getId());
             userFamilyRepository.save(userFamilyDetails);
@@ -250,8 +244,7 @@ public class UserController {
 
             return ResponseEntity.created(location).body(new ApiResponse(true, "Family details updated against user "));
 
-        }
-        else if(checkIfExists == null && user !=null){
+        } else if (checkIfExists == null && user != null) {
             userFamilyDetails.setUser(user);
             userFamilyRepository.save(userFamilyDetails);
 
@@ -261,8 +254,7 @@ public class UserController {
 
             return ResponseEntity.created(location).body(new ApiResponse(true, "Family details added against new user "));
 
-        }
-        else{
+        } else {
             return new ResponseEntity<>(new ApiResponse(false, "No user found"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
@@ -271,10 +263,53 @@ public class UserController {
 
     @GetMapping("/user/get/userFamilyDetails")
     @PreAuthorize("hasRole('USER')")
-    public List<UserFamilyDetails> getUserFamilyDetails(@CurrentUser UserPrincipal currentUser){
+    public List<UserFamilyDetails> getUserFamilyDetails(@CurrentUser UserPrincipal currentUser) {
 
         User user = userRepository.findByEmail(currentUser.getEmail());
         return userFamilyRepository.findByUser(user);
+    }
+
+    @PostMapping("/user/save/additionalDetails")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<?> saveAdditionalDetails(@CurrentUser UserPrincipal currentUser, @RequestBody UserAdditionalDetails userAdditionalDetails) {
+
+        User user = userRepository.findByEmail(currentUser.getEmail());
+        UserAdditionalDetails checkIfExists = userAdditionalRepository.findByUser(user);
+
+        if (user != null && checkIfExists != null) {
+            userAdditionalDetails.setUser(user);
+            userAdditionalDetails.setId(checkIfExists.getId());
+            userAdditionalRepository.save(userAdditionalDetails);
+
+            URI location = ServletUriComponentsBuilder
+                    .fromCurrentContextPath().path("/user/save/additionalDetails")
+                    .buildAndExpand(currentUser.getUsername()).toUri();
+
+            return ResponseEntity.created(location).body(new ApiResponse(true, "Additional details updated against user "));
+
+        } else if (checkIfExists == null && user != null) {
+            userAdditionalDetails.setUser(user);
+            userAdditionalRepository.save(userAdditionalDetails);
+
+            URI location = ServletUriComponentsBuilder
+                    .fromCurrentContextPath().path("/user/save/additionalDetails")
+                    .buildAndExpand(currentUser.getUsername()).toUri();
+
+            return ResponseEntity.created(location).body(new ApiResponse(true, "Additional details added against new user "));
+
+        } else {
+            return new ResponseEntity<>(new ApiResponse(false, "No user found"), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+
+    }
+
+    @GetMapping("/user/get/additionalDetails")
+    @PreAuthorize("hasRole('USER')")
+    public UserAdditionalDetails getUserAdditionalDetails(@CurrentUser UserPrincipal currentUser) {
+
+        User user = userRepository.findByEmail(currentUser.getEmail());
+        return userAdditionalRepository.findByUser(user);
     }
 
 }
