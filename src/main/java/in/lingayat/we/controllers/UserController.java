@@ -52,6 +52,11 @@ public class UserController {
         return userSummary;
     }
 
+    @GetMapping("/version")
+    public String getCurrentVersion(@CurrentUser UserPrincipal currentUser) {
+       return "v1";
+    }
+
     @PostMapping("/user/save/basicDetails")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> savePersonalDetails(@CurrentUser UserPrincipal currentUser, @RequestBody UserBasicEditRequest userFromRequest) {
