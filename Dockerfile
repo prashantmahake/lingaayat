@@ -6,7 +6,7 @@ FROM maven:3.5-jdk-8-alpine
 WORKDIR /app
 COPY . /app
 RUN ls
-# RUN mvn package -DskipTests
+RUN mvn package -DskipTests
 
 FROM openjdk:8-jre-alpine
 WORKDIR /app
