@@ -1,9 +1,11 @@
 package in.lingayat.we.payload;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
+public class UserBasicEditRequest {
 
-public class SignUpRequest {
     @NotBlank
     @Size(min = 4, max = 40)
     private String firstName;
@@ -11,11 +13,6 @@ public class SignUpRequest {
     @NotBlank
     @Size(min = 4, max = 40)
     private String lastName;
-
-    @NotBlank
-    @Size(min = 4, max = 40)
-    private String middleName;
-
 
     @NotBlank
     @Size(min = 3, max = 40)
@@ -27,13 +24,19 @@ public class SignUpRequest {
     private String email;
 
     @NotBlank
-    @Size(min = 6, max = 20)
-    private String password;
-
-    @NotBlank
     @Size(min = 10, max = 13)
     private String contact;
 
+    public UserBasicEditRequest() {
+    }
+
+    public UserBasicEditRequest(@NotBlank @Size(min = 4, max = 40) String firstName, @NotBlank @Size(min = 4, max = 40) String lastName, @NotBlank @Size(min = 3, max = 40) String username, @NotBlank @Size(max = 40) @Email String email, @NotBlank @Size(min = 10, max = 13) String contact) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.email = email;
+        this.contact = contact;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -51,14 +54,6 @@ public class SignUpRequest {
         this.lastName = lastName;
     }
 
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -73,14 +68,6 @@ public class SignUpRequest {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getContact() {

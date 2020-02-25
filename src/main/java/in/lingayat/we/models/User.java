@@ -30,7 +30,15 @@ public class User extends DateAudit {
 
     @NotBlank
     @Size(max = 40)
-    private String name;
+    private String firstName;
+
+    @NotBlank
+    @Size(max = 40)
+    private String lastName;
+
+    @NotBlank
+    @Size(max = 40)
+    private String middleName;
 
     @NotBlank
     @Size(max = 40)
@@ -60,12 +68,16 @@ public class User extends DateAudit {
 
     }
 
-    public User(String name, String username, String email, String password, String contact) {
-        this.name = name;
+    public User(@NotBlank @Size(max = 40) String firstName, @NotBlank @Size(max = 40) String lastName, @NotBlank @Size(max = 40) String middleName, @NotBlank @Size(max = 40) String username, @NotBlank @Size(max = 40) @Email String email, @NotBlank @Size(max = 100) String password, @NotBlank @Size(max = 15) String contact) {
+
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.middleName = middleName;
         this.username = username;
         this.email = email;
-        this.contact = contact;
         this.password = password;
+        this.contact = contact;
+
     }
 
     public Long getId() {
@@ -84,12 +96,20 @@ public class User extends DateAudit {
         this.username = username;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -122,5 +142,13 @@ public class User extends DateAudit {
 
     public void setContact(String contact) {
         this.contact = contact;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
     }
 }

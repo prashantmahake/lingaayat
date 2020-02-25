@@ -2,6 +2,7 @@ package in.lingayat.we.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import in.lingayat.we.models.enums.Complexion;
+import in.lingayat.we.models.enums.FamilyType;
 import in.lingayat.we.models.enums.Gender;
 import in.lingayat.we.models.enums.MaritalStatus;
 
@@ -38,6 +39,9 @@ public class UserPersonalDetails {
     @Enumerated(EnumType.STRING)
     private MaritalStatus maritalStatus;
 
+    @Enumerated(EnumType.STRING)
+    private FamilyType familyType;
+
     @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -47,7 +51,8 @@ public class UserPersonalDetails {
     }
 
 
-    public UserPersonalDetails(@NotBlank Date dob, @NotBlank String placeOfBirth, Gender gender, @NotBlank int heightInCms, @NotBlank int weightInKgs, Complexion complexion, MaritalStatus maritalStatus, User user) {
+    public UserPersonalDetails(Long id, Date dob, @NotBlank String placeOfBirth, Gender gender, Integer heightInCms, Integer weightInKgs, Complexion complexion, MaritalStatus maritalStatus, FamilyType familyType, User user) {
+        this.id = id;
         this.dob = dob;
         this.placeOfBirth = placeOfBirth;
         this.gender = gender;
@@ -55,6 +60,7 @@ public class UserPersonalDetails {
         this.weightInKgs = weightInKgs;
         this.complexion = complexion;
         this.maritalStatus = maritalStatus;
+        this.familyType = familyType;
         this.user = user;
     }
 
@@ -128,5 +134,21 @@ public class UserPersonalDetails {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public void setHeightInCms(Integer heightInCms) {
+        this.heightInCms = heightInCms;
+    }
+
+    public void setWeightInKgs(Integer weightInKgs) {
+        this.weightInKgs = weightInKgs;
+    }
+
+    public FamilyType getFamilyType() {
+        return familyType;
+    }
+
+    public void setFamilyType(FamilyType familyType) {
+        this.familyType = familyType;
     }
 }

@@ -2,6 +2,7 @@ package in.lingayat.we.controllers;
 
 import in.lingayat.we.models.*;
 import in.lingayat.we.payload.ApiResponse;
+import in.lingayat.we.payload.UserBasicEditRequest;
 import in.lingayat.we.payload.UserSummary;
 import in.lingayat.we.repositories.*;
 import org.slf4j.Logger;
@@ -47,11 +48,39 @@ public class UserController {
     @GetMapping("/user/me")
     @PreAuthorize("hasRole('USER')")
     public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
-        UserSummary userSummary = new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());
+                UserSummary userSummary = new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getFirstName(), currentUser.getLastName(), currentUser.getMiddleName(), currentUser.getContact(), currentUser.getEmail());
         return userSummary;
     }
 
-    @PostMapping("/user/save/personalDetails")
+    @PostMapping("/user/save/basicDetails")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<?> savePersonalDetails(@CurrentUser UserPrincipal currentUser, @RequestBody UserBasicEditRequest userFromRequest) {
+
+        User user = userRepository.findByEmail(currentUser.getEmail());
+
+        if (user != null ) {
+            user.setFirstName(userFromRequest.getFirstName());
+            user.setLastName(userFromRequest.getLastName());
+            user.setContact(userFromRequest.getContact());
+            user.setEmail(userFromRequest.getEmail());
+
+            userRepository.save(user);
+
+            URI location = ServletUriComponentsBuilder
+                    .fromCurrentContextPath().path("/user/save/basicUserDetails")
+                    .buildAndExpand(currentUser.getUsername()).toUri();
+
+            return ResponseEntity.created(location).body(new ApiResponse(true, "Basic details updated against user "));
+
+        } else {
+            return new ResponseEntity<>(new ApiResponse(false, "No user found"), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+
+    }
+
+
+        @PostMapping("/user/save/personalDetails")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> savePersonalDetails(@CurrentUser UserPrincipal currentUser, @RequestBody UserPersonalDetails userPersonalDetails) {
 
