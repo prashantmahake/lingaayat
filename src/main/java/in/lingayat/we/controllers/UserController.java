@@ -295,6 +295,32 @@ public class UserController {
 
     }
 
+    @PostMapping("/user/delete/userFamilyDetails")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<?> deleteFamilyDetails(@CurrentUser UserPrincipal currentUser, @RequestBody UserFamilyDetails userFamilyDetails) {
+        User user = userRepository.findByEmail(currentUser.getEmail());
+        UserFamilyDetails checkIfExists = userFamilyRepository.
+                findByUserAndFirstNameAndLastName(user, userFamilyDetails.getFirstName(), userFamilyDetails.getLastName());
+
+        if (user != null && checkIfExists != null) {
+            userFamilyDetails.setUser(user);
+            userFamilyDetails.setId(checkIfExists.getId());
+            userFamilyRepository.delete(userFamilyDetails);
+
+            URI location = ServletUriComponentsBuilder
+                    .fromCurrentContextPath().path("/user/save/userFamilyDetails")
+                    .buildAndExpand(currentUser.getUsername()).toUri();
+
+            return ResponseEntity.created(location).body(new ApiResponse(true, "Family details Deleted against user "));
+
+        }else {
+            return new ResponseEntity<>(new ApiResponse(false, "No user found"), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+
+
+    }
+
     @GetMapping("/user/get/userFamilyDetails")
     @PreAuthorize("hasRole('USER')")
     public List<UserFamilyDetails> getUserFamilyDetails(@CurrentUser UserPrincipal currentUser) {
