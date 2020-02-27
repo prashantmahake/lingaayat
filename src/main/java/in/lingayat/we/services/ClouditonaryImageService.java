@@ -21,18 +21,15 @@ public class ClouditonaryImageService {
     private Cloudinary cloudinary = null;
 
     public Cloudinary getCloudinary(){
-        if(this.cloudinary!=null)
-        {
-            return cloudinary;
-        }else
-        {
+
+        if (this.cloudinary == null) {
             cloudinary = new Cloudinary(ObjectUtils.asMap(
                     "cloud_name", this.cloudName,
                     "api_key", this.cloudApiKey,
                     "api_secret", this.cloudApiSecret));
 
-            return cloudinary;
         }
+        return cloudinary;
     }
 
 }
