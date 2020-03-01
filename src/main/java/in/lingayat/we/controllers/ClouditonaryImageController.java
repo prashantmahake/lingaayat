@@ -37,7 +37,7 @@ public class ClouditonaryImageController {
     @Autowired
     private UserRepository userRepository;
 
-    @PostMapping("/upload/image")
+    @PostMapping("/save/profileImage")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> uploadImage(@CurrentUser UserPrincipal currentUser, @RequestParam("file") MultipartFile file)  {
 
@@ -61,7 +61,7 @@ public class ClouditonaryImageController {
         System.out.println(uploadResult);
         if(uploadResult.get("url")!=null)
         {
-            responseMessage = "Image Uploaded at:";
+//            responseMessage = "Image Uploaded at:";
             responseMessage += uploadResult.get("url").toString();
             UserImages userImages = new UserImages(uploadResult.get("url").toString(), "Profile", user);
 
@@ -80,5 +80,15 @@ public class ClouditonaryImageController {
 
         return ResponseEntity.created(location).body(new ApiResponse(true, responseMessage));
     }
+
+    @GetMapping("/get/profileImage")
+    @PreAuthorize("hasRole('USER')")
+    public UserImages getProfileImage(@CurrentUser UserPrincipal currentUser){
+        User user = userRepository.findByEmail(currentUser.getEmail());
+
+
+        return userImageRepository.findByUser(user);
+    }
+
 
 }
