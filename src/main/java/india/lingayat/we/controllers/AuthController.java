@@ -2,9 +2,8 @@ package india.lingayat.we.controllers;
 
 
 import india.lingayat.we.exceptions.AppException;
-import india.lingayat.we.models.Role;
+import india.lingayat.we.models.*;
 import india.lingayat.we.models.enums.RoleName;
-import india.lingayat.we.models.User;
 import india.lingayat.we.payload.ApiResponse;
 import india.lingayat.we.payload.JwtAuthenticationResponse;
 import india.lingayat.we.payload.LoginRequest;
@@ -15,9 +14,11 @@ import india.lingayat.we.services.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -67,12 +68,12 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
-        if(userRepository.existsByUsername(signUpRequest.getUsername())) {
+        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return new ResponseEntity(new ApiResponse(false, "Username is already taken!"),
                     HttpStatus.BAD_REQUEST);
         }
 
-        if(userRepository.existsByEmail(signUpRequest.getEmail())) {
+        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             return new ResponseEntity(new ApiResponse(false, "Email Address already in use!"),
                     HttpStatus.BAD_REQUEST);
         }
@@ -96,4 +97,47 @@ public class AuthController {
 
         return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
     }
+
+    @PostMapping("/changePassword")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<?> changePassword(@CurrentUser UserPrincipal currentUser, @RequestBody ChangePasswordRequest changePasswordRequest) {
+
+
+        User user = userRepository.findByEmail(currentUser.getEmail());
+
+        if (user == null) {
+
+            return new ResponseEntity(new ApiResponse(false, "User Does not exist"),
+                    HttpStatus.NOT_FOUND);
+        } else {
+
+            try {
+                Authentication authentication = authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(
+                                user.getEmail(),
+                                changePasswordRequest.getOldPassword()
+                        )
+                );
+                user.setPassword(passwordEncoder.encode(changePasswordRequest.getNewPassword()));
+
+                userRepository.save(user);
+
+                URI location = ServletUriComponentsBuilder
+                        .fromCurrentContextPath().path("/api/users/{username}")
+                        .buildAndExpand(user.getUsername()).toUri();
+
+                return ResponseEntity.created(location).body(new ApiResponse(true, "Password changed successfully"));
+
+            } catch (AuthenticationException e) {
+                return new ResponseEntity(new ApiResponse(false, "Old password did not match"),
+                        HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
+
+        }
+
+
+    }
+
+
 }
