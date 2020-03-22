@@ -84,9 +84,55 @@ public class SearchController {
             );
         }
 
+        if(filterRequest.getFirstName() != null && filterRequest.getFirstName()!="")
+        {
+            booleanBuilder.and(
+                    QUser.user.firstName.likeIgnoreCase(filterRequest.getFirstName())
+            );
+        }
+
+        if(filterRequest.getLastName() != null && filterRequest.getLastName()!="")
+        {
+            booleanBuilder.and(
+                    QUser.user.lastName.likeIgnoreCase(filterRequest.getLastName())
+            );
+        }
+
+        if(filterRequest.getJobType() != null && filterRequest.getJobType().size() !=0){
+            booleanBuilder.and(
+                    QUser.user.userProfessionalDetails.jobType.in(filterRequest.getJobType())
+            );
+        }
+
+        if(filterRequest.getCityNameOrPin() !=null && filterRequest.getCityNameOrPin()!="")
+        {
+            if(isNumeric(filterRequest.getCityNameOrPin())){
+                booleanBuilder.and(
+                        QUser.user.userAdditionalDetails.currentPinCode.eq(Integer.parseInt(filterRequest.getCityNameOrPin()))
+                );
+            }else
+            {
+                booleanBuilder.and(
+                        QUser.user.userAdditionalDetails.currentCity.likeIgnoreCase(filterRequest.getCityNameOrPin())
+                );
+            }
+        }
+
         Page<User> resultList = userRepository.findAll(booleanBuilder.getValue(), pageable);
 
         return resultList;
 
+    }
+
+    public static boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            int d = Integer.parseInt(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
     }
 }

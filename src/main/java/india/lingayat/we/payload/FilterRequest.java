@@ -1,5 +1,6 @@
 package india.lingayat.we.payload;
 
+import india.lingayat.we.models.enums.JobType;
 import india.lingayat.we.models.enums.Qualification;
 
 import java.util.List;
@@ -12,6 +13,10 @@ public class FilterRequest {
     private Long maxAge;
     private int minSalary;
     private List<Qualification> qualification;
+    private String firstName;
+    private String lastName;
+    private List<JobType> jobType;
+    private String cityNameOrPin;
 
     public FilterRequest() {
     }
@@ -38,5 +43,21 @@ public class FilterRequest {
 
     public List<Qualification> getQualification() {
         return qualification;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public List<JobType> getJobType() {
+        return jobType;
+    }
+
+    public String getCityNameOrPin() {
+        return cityNameOrPin;
     }
 }
