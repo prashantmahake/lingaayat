@@ -1,6 +1,6 @@
-package in.lingayat.we.services;
+package india.lingayat.we.services;
 
-import in.lingayat.we.models.UserPrincipal;
+import india.lingayat.we.models.UserPrincipal;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

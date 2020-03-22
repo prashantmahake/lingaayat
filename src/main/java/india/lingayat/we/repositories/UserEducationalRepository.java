@@ -1,7 +1,7 @@
-package in.lingayat.we.repositories;
+package india.lingayat.we.repositories;
 
-import in.lingayat.we.models.User;
-import in.lingayat.we.models.UserEducationalDetails;
+import india.lingayat.we.models.User;
+import india.lingayat.we.models.UserEducationalDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 

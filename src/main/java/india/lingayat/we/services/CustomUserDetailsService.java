@@ -1,8 +1,8 @@
-package in.lingayat.we.services;
+package india.lingayat.we.services;
 
-import in.lingayat.we.models.User;
-import in.lingayat.we.models.UserPrincipal;
-import in.lingayat.we.repositories.UserRepository;
+import india.lingayat.we.models.User;
+import india.lingayat.we.models.UserPrincipal;
+import india.lingayat.we.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

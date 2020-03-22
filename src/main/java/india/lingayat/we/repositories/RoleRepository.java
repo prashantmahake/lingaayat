@@ -1,8 +1,8 @@
-package in.lingayat.we.repositories;
+package india.lingayat.we.repositories;
 
 
-import in.lingayat.we.models.Role;
-import in.lingayat.we.models.enums.RoleName;
+import india.lingayat.we.models.Role;
+import india.lingayat.we.models.enums.RoleName;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

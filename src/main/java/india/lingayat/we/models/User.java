@@ -1,8 +1,10 @@
-package in.lingayat.we.models;
+package india.lingayat.we.models;
 
 
-import in.lingayat.we.models.audits.DateAudit;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.NaturalId;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -23,7 +25,7 @@ import java.util.Set;
                 "email"
         })
 })
-public class User  {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -63,6 +65,34 @@ public class User  {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToOne(cascade = CascadeType.ALL)
+    private UserAdditionalDetails userAdditionalDetails;
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToOne(cascade = CascadeType.ALL)
+    private UserEducationalDetails userEducationalDetails;
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<UserFamilyDetails> userFamilyDetails;
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToOne(cascade = CascadeType.ALL)
+    private UserImages userImages;
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToOne(cascade = CascadeType.ALL)
+    private UserMedicalDetails userMedicalDetails;
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToOne(cascade = CascadeType.ALL)
+    private UserPersonalDetails userPersonalDetails;
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToOne(cascade = CascadeType.ALL)
+    private UserProfessionalDetails userProfessionalDetails;
 
     public User() {
 
@@ -152,4 +182,61 @@ public class User  {
         this.middleName = middleName;
     }
 
+    public UserPersonalDetails getUserPersonalDetails() {
+        return userPersonalDetails;
+    }
+
+    public void setUserPersonalDetails(UserPersonalDetails userPersonalDetails) {
+        this.userPersonalDetails = userPersonalDetails;
+    }
+
+    public UserAdditionalDetails getUserAdditionalDetails() {
+        return userAdditionalDetails;
+    }
+
+    public void setUserAdditionalDetails(UserAdditionalDetails userAdditionalDetails) {
+        this.userAdditionalDetails = userAdditionalDetails;
+    }
+
+    public UserEducationalDetails getUserEducationalDetails() {
+        return userEducationalDetails;
+    }
+
+    public void setUserEducationalDetails(UserEducationalDetails userEducationalDetails) {
+        this.userEducationalDetails = userEducationalDetails;
+    }
+
+    public Set<UserFamilyDetails> getUserFamilyDetails() {
+        return userFamilyDetails;
+    }
+
+    public void setUserFamilyDetails(UserFamilyDetails userFamilyDetails) {
+        Set<UserFamilyDetails> familyDetails = getUserFamilyDetails();
+        familyDetails.add(userFamilyDetails);
+        this.userFamilyDetails = familyDetails;
+    }
+
+    public UserImages getUserImages() {
+        return userImages;
+    }
+
+    public void setUserImages(UserImages userImages) {
+        this.userImages = userImages;
+    }
+
+    public UserMedicalDetails getUserMedicalDetails() {
+        return userMedicalDetails;
+    }
+
+    public void setUserMedicalDetails(UserMedicalDetails userMedicalDetails) {
+        this.userMedicalDetails = userMedicalDetails;
+    }
+
+    public UserProfessionalDetails getUserProfessionalDetails() {
+        return userProfessionalDetails;
+    }
+
+    public void setUserProfessionalDetails(UserProfessionalDetails userProfessionalDetails) {
+        this.userProfessionalDetails = userProfessionalDetails;
+    }
 }

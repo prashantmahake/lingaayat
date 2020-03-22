@@ -1,4 +1,4 @@
-package in.lingayat.we.models.audits;
+package india.lingayat.we.models.audits;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedDate;

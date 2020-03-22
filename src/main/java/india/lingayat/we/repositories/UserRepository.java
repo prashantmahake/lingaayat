@@ -1,23 +1,31 @@
-package in.lingayat.we.repositories;
+package india.lingayat.we.repositories;
 
-import in.lingayat.we.models.User;
-import in.lingayat.we.payload.UserMinimumProjection;
+import com.querydsl.core.types.Predicate;
+import india.lingayat.we.models.User;
+import india.lingayat.we.payload.UserMinimumProjection;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
 @Component
-public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
+public interface UserRepository extends JpaRepository<User, Long>, QuerydslPredicateExecutor<User> {
 
     User findByEmail(String email);
+
+    @Override
+    @Cacheable("users")
+    Page<User> findAll(Predicate var1, Pageable var2);
+
+    List<UserMinimumProjection> findAllBy(Specification<User> specification, Pageable pageable);
 
     boolean existsByUsername(String username);
 
@@ -38,6 +46,5 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
             "\tLEFT JOIN user_professional pr ON u.id = pr.user_id WHERE u.id in :userIds ORDER BY u.id",
              nativeQuery = true)
     List<UserMinimumProjection> findAllUserMinimumView(List<Long> userIds);
-
 
 }

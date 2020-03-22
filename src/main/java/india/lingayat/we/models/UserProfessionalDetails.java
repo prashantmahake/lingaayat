@@ -1,8 +1,8 @@
-package in.lingayat.we.models;
+package india.lingayat.we.models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import in.lingayat.we.models.enums.JobType;
+import india.lingayat.we.models.enums.JobType;
 
 import javax.persistence.*;
 
@@ -26,8 +26,7 @@ public class UserProfessionalDetails {
     private String jobIndustry;
 
     @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "userProfessionalDetails")
     private User user;
 
     public UserProfessionalDetails() {

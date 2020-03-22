@@ -1,7 +1,7 @@
-package in.lingayat.we.models;
+package india.lingayat.we.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import in.lingayat.we.models.enums.BloodGroup;
+import india.lingayat.we.models.enums.BloodGroup;
 
 import javax.persistence.*;
 
@@ -21,8 +21,7 @@ public class UserMedicalDetails {
     private String typeOfDisability;
 
     @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "userMedicalDetails")
     private User user;
 
     public UserMedicalDetails() {

@@ -1,6 +1,6 @@
-package in.lingayat.we.models;
+package india.lingayat.we.models;
 
-import in.lingayat.we.models.enums.RoleName;
+import india.lingayat.we.models.enums.RoleName;
 import org.hibernate.annotations.NaturalId;
 import javax.persistence.*;
 

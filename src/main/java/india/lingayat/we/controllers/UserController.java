@@ -1,14 +1,15 @@
-package in.lingayat.we.controllers;
+package india.lingayat.we.controllers;
 
-import in.lingayat.we.models.*;
-import in.lingayat.we.payload.ApiResponse;
-import in.lingayat.we.payload.UserBasicEditRequest;
-import in.lingayat.we.payload.UserSummary;
-import in.lingayat.we.repositories.*;
+import india.lingayat.we.models.*;
+import india.lingayat.we.payload.ApiResponse;
+import india.lingayat.we.payload.UserBasicEditRequest;
+import india.lingayat.we.payload.UserSummary;
+import india.lingayat.we.repositories.*;
+import india.lingayat.we.models.*;
+import india.lingayat.we.repositories.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api")
@@ -48,13 +50,13 @@ public class UserController {
     @GetMapping("/user/me")
     @PreAuthorize("hasRole('USER')")
     public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
-                UserSummary userSummary = new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getFirstName(), currentUser.getLastName(), currentUser.getMiddleName(), currentUser.getContact(), currentUser.getEmail());
+        UserSummary userSummary = new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getFirstName(), currentUser.getLastName(), currentUser.getMiddleName(), currentUser.getContact(), currentUser.getEmail());
         return userSummary;
     }
 
     @GetMapping("/version")
     public String getCurrentVersion(@CurrentUser UserPrincipal currentUser) {
-       return "v1";
+        return "v1";
     }
 
     @PostMapping("/user/save/basicDetails")
@@ -63,7 +65,7 @@ public class UserController {
 
         User user = userRepository.findByEmail(currentUser.getEmail());
 
-        if (user != null ) {
+        if (user != null) {
             user.setFirstName(userFromRequest.getFirstName());
             user.setMiddleName(userFromRequest.getMiddleName());
             user.setLastName(userFromRequest.getLastName());
@@ -86,39 +88,25 @@ public class UserController {
     }
 
 
-        @PostMapping("/user/save/personalDetails")
+    @PostMapping("/user/save/personalDetails")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> savePersonalDetails(@CurrentUser UserPrincipal currentUser, @RequestBody UserPersonalDetails userPersonalDetails) {
 
         User user = userRepository.findByEmail(currentUser.getEmail());
-        UserPersonalDetails checkIfExists = userPersonalDetailsRepository.findByUser(user);
 
-        if (user != null && checkIfExists != null) {
+        if (user != null) {
+            user.setUserPersonalDetails(userPersonalDetails);
             userPersonalDetails.setUser(user);
-            userPersonalDetails.setId(checkIfExists.getId());
-            userPersonalDetailsRepository.save(userPersonalDetails);
+            userRepository.save(user);
 
             URI location = ServletUriComponentsBuilder
                     .fromCurrentContextPath().path("/user/save/personalDetails")
                     .buildAndExpand(currentUser.getUsername()).toUri();
 
             return ResponseEntity.created(location).body(new ApiResponse(true, "Personal details updated against user "));
-
-        } else if (checkIfExists == null && user != null) {
-            userPersonalDetails.setUser(user);
-            userPersonalDetailsRepository.save(userPersonalDetails);
-
-            URI location = ServletUriComponentsBuilder
-                    .fromCurrentContextPath().path("/user/save/personalDetails")
-                    .buildAndExpand(currentUser.getUsername()).toUri();
-
-            return ResponseEntity.created(location).body(new ApiResponse(true, "Personal details added against new user "));
-
         } else {
             return new ResponseEntity<>(new ApiResponse(false, "No user found"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-
     }
 
     @GetMapping("/user/get/personalDetails")
@@ -128,7 +116,7 @@ public class UserController {
         User user = userRepository.findByEmail(currentUser.getEmail());
 
 
-        return userPersonalDetailsRepository.findByUser(user);
+        return user.getUserPersonalDetails();
     }
 
     @PostMapping("/user/save/educationalDetails")
@@ -136,33 +124,20 @@ public class UserController {
     public ResponseEntity<?> saveEducationalDetails(@CurrentUser UserPrincipal currentUser, @RequestBody UserEducationalDetails userEducationalDetails) {
 
         User user = userRepository.findByEmail(currentUser.getEmail());
-        UserEducationalDetails checkIfExists = userEducationalRepository.findByUser(user);
 
-        if (user != null && checkIfExists != null) {
+        if (user != null) {
+            user.setUserEducationalDetails(userEducationalDetails);
             userEducationalDetails.setUser(user);
-            userEducationalDetails.setId(checkIfExists.getId());
-            userEducationalRepository.save(userEducationalDetails);
+            userRepository.save(user);
 
             URI location = ServletUriComponentsBuilder
                     .fromCurrentContextPath().path("/user/save/educationalDetails")
                     .buildAndExpand(currentUser.getUsername()).toUri();
 
             return ResponseEntity.created(location).body(new ApiResponse(true, "Educational details updated against user "));
-
-        } else if (checkIfExists == null && user != null) {
-            userEducationalDetails.setUser(user);
-            userEducationalRepository.save(userEducationalDetails);
-
-            URI location = ServletUriComponentsBuilder
-                    .fromCurrentContextPath().path("/user/save/educationalDetails")
-                    .buildAndExpand(currentUser.getUsername()).toUri();
-
-            return ResponseEntity.created(location).body(new ApiResponse(true, "Educational details added against new user "));
-
         } else {
             return new ResponseEntity<>(new ApiResponse(false, "No user found"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
 
     }
 
@@ -171,7 +146,7 @@ public class UserController {
     public UserEducationalDetails getUserEducationalDetails(@CurrentUser UserPrincipal currentUser) {
 
         User user = userRepository.findByEmail(currentUser.getEmail());
-        return userEducationalRepository.findByUser(user);
+        return user.getUserEducationalDetails();
     }
 
     @PostMapping("/user/save/professionalDetails")
@@ -179,33 +154,20 @@ public class UserController {
     public ResponseEntity<?> saveProfessionalDetails(@CurrentUser UserPrincipal currentUser, @RequestBody UserProfessionalDetails userProfessionalDetails) {
 
         User user = userRepository.findByEmail(currentUser.getEmail());
-        UserProfessionalDetails checkIfExists = userProfessionalDetailsRepository.findByUser(user);
 
-        if (user != null && checkIfExists != null) {
+        if (user != null) {
+            user.setUserProfessionalDetails(userProfessionalDetails);
             userProfessionalDetails.setUser(user);
-            userProfessionalDetails.setId(checkIfExists.getId());
-            userProfessionalDetailsRepository.save(userProfessionalDetails);
+            userRepository.save(user);
 
             URI location = ServletUriComponentsBuilder
                     .fromCurrentContextPath().path("/user/save/professionalDetails")
                     .buildAndExpand(currentUser.getUsername()).toUri();
 
             return ResponseEntity.created(location).body(new ApiResponse(true, "Professional details updated against user "));
-
-        } else if (checkIfExists == null && user != null) {
-            userProfessionalDetails.setUser(user);
-            userProfessionalDetailsRepository.save(userProfessionalDetails);
-
-            URI location = ServletUriComponentsBuilder
-                    .fromCurrentContextPath().path("/user/save/professionalDetails")
-                    .buildAndExpand(currentUser.getUsername()).toUri();
-
-            return ResponseEntity.created(location).body(new ApiResponse(true, "Professional details added against new user "));
-
         } else {
             return new ResponseEntity<>(new ApiResponse(false, "No user found"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
 
     }
 
@@ -214,7 +176,7 @@ public class UserController {
     public UserProfessionalDetails getUserProfessionalDetails(@CurrentUser UserPrincipal currentUser) {
 
         User user = userRepository.findByEmail(currentUser.getEmail());
-        return userProfessionalDetailsRepository.findByUser(user);
+        return user.getUserProfessionalDetails();
     }
 
     @PostMapping("/user/save/medicalDetails")
@@ -222,29 +184,17 @@ public class UserController {
     public ResponseEntity<?> saveMedicalDetails(@CurrentUser UserPrincipal currentUser, @RequestBody UserMedicalDetails userMedicalDetails) {
 
         User user = userRepository.findByEmail(currentUser.getEmail());
-        UserMedicalDetails checkIfExists = userMedicalRepository.findByUser(user);
 
-        if (user != null && checkIfExists != null) {
+        if (user != null) {
+            user.setUserMedicalDetails(userMedicalDetails);
             userMedicalDetails.setUser(user);
-            userMedicalDetails.setId(checkIfExists.getId());
-            userMedicalRepository.save(userMedicalDetails);
+            userRepository.save(user);
 
             URI location = ServletUriComponentsBuilder
                     .fromCurrentContextPath().path("/user/save/medicalDetails")
                     .buildAndExpand(currentUser.getUsername()).toUri();
 
             return ResponseEntity.created(location).body(new ApiResponse(true, "Medical details updated against user "));
-
-        } else if (checkIfExists == null && user != null) {
-            userMedicalDetails.setUser(user);
-            userMedicalRepository.save(userMedicalDetails);
-
-            URI location = ServletUriComponentsBuilder
-                    .fromCurrentContextPath().path("/user/save/medicalDetails")
-                    .buildAndExpand(currentUser.getUsername()).toUri();
-
-            return ResponseEntity.created(location).body(new ApiResponse(true, "Medical details added against new user "));
-
         } else {
             return new ResponseEntity<>(new ApiResponse(false, "No user found"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -257,7 +207,7 @@ public class UserController {
     public UserMedicalDetails getUserMedicalDetails(@CurrentUser UserPrincipal currentUser) {
 
         User user = userRepository.findByEmail(currentUser.getEmail());
-        return userMedicalRepository.findByUser(user);
+        return user.getUserMedicalDetails();
     }
 
     @PostMapping("/user/save/userFamilyDetails")
@@ -265,34 +215,20 @@ public class UserController {
     public ResponseEntity<?> saveFamilyDetails(@CurrentUser UserPrincipal currentUser, @RequestBody UserFamilyDetails userFamilyDetails) {
 
         User user = userRepository.findByEmail(currentUser.getEmail());
-        UserFamilyDetails checkIfExists = userFamilyRepository.
-                findByUserAndFirstNameAndLastName(user, userFamilyDetails.getFirstName(), userFamilyDetails.getLastName());
 
-        if (user != null && checkIfExists != null) {
+        if (user != null) {
+            user.setUserFamilyDetails(userFamilyDetails);
             userFamilyDetails.setUser(user);
-            userFamilyDetails.setId(checkIfExists.getId());
-            userFamilyRepository.save(userFamilyDetails);
+            userRepository.save(user);
 
             URI location = ServletUriComponentsBuilder
-                    .fromCurrentContextPath().path("/user/save/userFamilyDetails")
+                    .fromCurrentContextPath().path("/user/save/familyDetals")
                     .buildAndExpand(currentUser.getUsername()).toUri();
 
             return ResponseEntity.created(location).body(new ApiResponse(true, "Family details updated against user "));
-
-        } else if (checkIfExists == null && user != null) {
-            userFamilyDetails.setUser(user);
-            userFamilyRepository.save(userFamilyDetails);
-
-            URI location = ServletUriComponentsBuilder
-                    .fromCurrentContextPath().path("/user/save/userFamilyDetails")
-                    .buildAndExpand(currentUser.getUsername()).toUri();
-
-            return ResponseEntity.created(location).body(new ApiResponse(true, "Family details added against new user "));
-
         } else {
             return new ResponseEntity<>(new ApiResponse(false, "No user found"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
 
     }
 
@@ -300,34 +236,31 @@ public class UserController {
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> deleteFamilyDetails(@CurrentUser UserPrincipal currentUser, @RequestBody UserFamilyDetails userFamilyDetails) {
         User user = userRepository.findByEmail(currentUser.getEmail());
-        UserFamilyDetails checkIfExists = userFamilyRepository.
-                findByUserAndFirstNameAndLastName(user, userFamilyDetails.getFirstName(), userFamilyDetails.getLastName());
 
-        if (user != null && checkIfExists != null) {
+        if (user != null) {
+//            To-do
+//            Delete family details
             userFamilyDetails.setUser(user);
-            userFamilyDetails.setId(checkIfExists.getId());
             userFamilyRepository.delete(userFamilyDetails);
 
             URI location = ServletUriComponentsBuilder
-                    .fromCurrentContextPath().path("/user/save/userFamilyDetails")
+                    .fromCurrentContextPath().path("/user/save/educationalDetails")
                     .buildAndExpand(currentUser.getUsername()).toUri();
 
-            return ResponseEntity.created(location).body(new ApiResponse(true, "Family details Deleted against user "));
-
-        }else {
+            return ResponseEntity.created(location).body(new ApiResponse(true, "Personal details updated against user "));
+        } else {
             return new ResponseEntity<>(new ApiResponse(false, "No user found"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
 
 
     }
 
     @GetMapping("/user/get/userFamilyDetails")
     @PreAuthorize("hasRole('USER')")
-    public List<UserFamilyDetails> getUserFamilyDetails(@CurrentUser UserPrincipal currentUser) {
+    public Set<UserFamilyDetails> getUserFamilyDetails(@CurrentUser UserPrincipal currentUser) {
 
         User user = userRepository.findByEmail(currentUser.getEmail());
-        return userFamilyRepository.findByUser(user);
+        return user.getUserFamilyDetails();
     }
 
     @PostMapping("/user/save/additionalDetails")
@@ -335,29 +268,17 @@ public class UserController {
     public ResponseEntity<?> saveAdditionalDetails(@CurrentUser UserPrincipal currentUser, @RequestBody UserAdditionalDetails userAdditionalDetails) {
 
         User user = userRepository.findByEmail(currentUser.getEmail());
-        UserAdditionalDetails checkIfExists = userAdditionalRepository.findByUser(user);
 
-        if (user != null && checkIfExists != null) {
+        if (user != null) {
+            user.setUserAdditionalDetails(userAdditionalDetails);
             userAdditionalDetails.setUser(user);
-            userAdditionalDetails.setId(checkIfExists.getId());
-            userAdditionalRepository.save(userAdditionalDetails);
+            userRepository.save(user);
 
             URI location = ServletUriComponentsBuilder
                     .fromCurrentContextPath().path("/user/save/additionalDetails")
                     .buildAndExpand(currentUser.getUsername()).toUri();
 
             return ResponseEntity.created(location).body(new ApiResponse(true, "Additional details updated against user "));
-
-        } else if (checkIfExists == null && user != null) {
-            userAdditionalDetails.setUser(user);
-            userAdditionalRepository.save(userAdditionalDetails);
-
-            URI location = ServletUriComponentsBuilder
-                    .fromCurrentContextPath().path("/user/save/additionalDetails")
-                    .buildAndExpand(currentUser.getUsername()).toUri();
-
-            return ResponseEntity.created(location).body(new ApiResponse(true, "Additional details added against new user "));
-
         } else {
             return new ResponseEntity<>(new ApiResponse(false, "No user found"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -370,7 +291,7 @@ public class UserController {
     public UserAdditionalDetails getUserAdditionalDetails(@CurrentUser UserPrincipal currentUser) {
 
         User user = userRepository.findByEmail(currentUser.getEmail());
-        return userAdditionalRepository.findByUser(user);
+        return user.getUserAdditionalDetails();
     }
 
 }

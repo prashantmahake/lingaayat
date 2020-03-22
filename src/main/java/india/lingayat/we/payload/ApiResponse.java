@@ -1,4 +1,4 @@
-package in.lingayat.we.payload;
+package india.lingayat.we.payload;
 
 public class ApiResponse {
     private Boolean success;

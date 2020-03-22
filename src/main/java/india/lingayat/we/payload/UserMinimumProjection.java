@@ -1,8 +1,8 @@
-package in.lingayat.we.payload;
+package india.lingayat.we.payload;
 
-import in.lingayat.we.models.enums.Complexion;
-import in.lingayat.we.models.enums.Gender;
-import in.lingayat.we.models.enums.MaritalStatus;
+import india.lingayat.we.models.enums.Complexion;
+import india.lingayat.we.models.enums.Gender;
+import india.lingayat.we.models.enums.MaritalStatus;
 
 import java.sql.Date;
 
@@ -15,25 +15,47 @@ public interface UserMinimumProjection {
 
     String getLastName() ;
 
-    Gender getGender();
+    PersonalDetails getUserPersonalDetails();
 
-    MaritalStatus getMaritalStatus() ;
+    ProfessionalDetails getUserProfessionalDetails();
 
-    Complexion getComplexion() ;
+    EducationalDetails getUserEducationalDetails();
 
-    String getImageUrl() ;
+    AdditionalDetails getUserAdditionalDetails();
 
-    Date getDob() ;
+    UserImagesDetails getUserImages();
 
-    Integer getHeightInCms();
 
-    Integer getWeightInKgs();
+    interface PersonalDetails{
+        Date getDob() ;
 
-    String getCurrentCity() ;
+        Integer getHeightInCms();
 
-    Long getMonthlyIncome();
+        Integer getWeightInKgs();
 
-    String getJobRole() ;
+        Complexion getComplexion() ;
 
-    String getQualification() ;
+        Gender getGender();
+
+        MaritalStatus getMaritalStatus() ;
+
+    }
+
+    interface ProfessionalDetails{
+        Long getMonthlyIncome();
+
+        String getJobRole() ;
+    }
+
+    interface EducationalDetails{
+        String getQualification() ;
+    }
+
+    interface AdditionalDetails{
+        String getCurrentCity() ;
+    }
+
+    interface UserImagesDetails{
+        String getImageUrl() ;
+    }
 }

@@ -1,4 +1,4 @@
-package in.lingayat.we.models;
+package india.lingayat.we.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -16,8 +16,7 @@ public class UserImages {
     private String imageType;
 
     @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "userImages")
     private User user;
 
     public UserImages() {

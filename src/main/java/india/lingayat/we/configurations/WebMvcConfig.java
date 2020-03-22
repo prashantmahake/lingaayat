@@ -1,4 +1,4 @@
-package in.lingayat.we.configurations;
+package india.lingayat.we.configurations;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

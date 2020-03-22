@@ -1,4 +1,4 @@
-package in.lingayat.we;
+package india.lingayat.we;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

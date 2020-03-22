@@ -1,9 +1,8 @@
-package in.lingayat.we.models;
+package india.lingayat.we.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="user_additional")
@@ -34,8 +33,7 @@ public class UserAdditionalDetails {
     private String additionalDetails2;
 
     @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "userAdditionalDetails")
     private User user;
 
     public UserAdditionalDetails() {

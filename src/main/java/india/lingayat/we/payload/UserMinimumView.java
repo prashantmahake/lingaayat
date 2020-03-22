@@ -1,8 +1,8 @@
-package in.lingayat.we.payload;
+package india.lingayat.we.payload;
 
-import in.lingayat.we.models.enums.Complexion;
-import in.lingayat.we.models.enums.Gender;
-import in.lingayat.we.models.enums.MaritalStatus;
+import india.lingayat.we.models.enums.Complexion;
+import india.lingayat.we.models.enums.Gender;
+import india.lingayat.we.models.enums.MaritalStatus;
 
 import java.sql.Date;
 

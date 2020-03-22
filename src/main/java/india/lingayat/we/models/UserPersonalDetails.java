@@ -1,10 +1,10 @@
-package in.lingayat.we.models;
+package india.lingayat.we.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import in.lingayat.we.models.enums.Complexion;
-import in.lingayat.we.models.enums.FamilyType;
-import in.lingayat.we.models.enums.Gender;
-import in.lingayat.we.models.enums.MaritalStatus;
+import india.lingayat.we.models.enums.Complexion;
+import india.lingayat.we.models.enums.FamilyType;
+import india.lingayat.we.models.enums.Gender;
+import india.lingayat.we.models.enums.MaritalStatus;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -40,8 +40,7 @@ public class UserPersonalDetails {
     private FamilyType familyType;
 
     @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "userPersonalDetails")
     private User user;
 
     public UserPersonalDetails() {

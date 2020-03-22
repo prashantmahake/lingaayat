@@ -1,4 +1,4 @@
-package in.lingayat.we.exceptions;
+package india.lingayat.we.exceptions;
 
 public class UserAlreadyExistException extends Exception {
     public UserAlreadyExistException() {

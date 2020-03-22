@@ -1,7 +1,7 @@
-package in.lingayat.we.models;
+package india.lingayat.we.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import in.lingayat.we.models.enums.Qualification;
+import india.lingayat.we.models.enums.Qualification;
 
 import javax.persistence.*;
 
@@ -21,8 +21,7 @@ public class UserEducationalDetails {
     private String other_qualification;
 
     @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "userEducationalDetails")
     private User user;
 
     public UserEducationalDetails() {

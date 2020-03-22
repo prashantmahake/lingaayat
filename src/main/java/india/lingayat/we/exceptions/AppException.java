@@ -1,4 +1,4 @@
-package in.lingayat.we.exceptions;
+package india.lingayat.we.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

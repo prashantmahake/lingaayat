@@ -1,7 +1,7 @@
-package in.lingayat.we.security;
+package india.lingayat.we.security;
 
-import in.lingayat.we.models.User;
-import in.lingayat.we.repositories.UserRepository;
+import india.lingayat.we.models.User;
+import india.lingayat.we.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

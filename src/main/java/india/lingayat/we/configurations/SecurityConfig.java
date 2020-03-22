@@ -1,8 +1,8 @@
-package in.lingayat.we.configurations;
+package india.lingayat.we.configurations;
 
-import in.lingayat.we.security.JwtAuthenticationEntryPoint;
-import in.lingayat.we.security.JwtAuthenticationFilter;
-import in.lingayat.we.services.CustomUserDetailsService;
+import india.lingayat.we.security.JwtAuthenticationEntryPoint;
+import india.lingayat.we.security.JwtAuthenticationFilter;
+import india.lingayat.we.services.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

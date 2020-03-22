@@ -1,4 +1,4 @@
-package in.lingayat.we.services;
+package india.lingayat.we.services;
 
 import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Value;

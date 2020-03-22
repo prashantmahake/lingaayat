@@ -1,7 +1,9 @@
-package in.lingayat.we.specifications;
+package india.lingayat.we.specifications;
 
-import in.lingayat.we.models.User;
-import in.lingayat.we.models.UserPersonalDetails;
+import india.lingayat.we.models.User;
+import india.lingayat.we.models.UserPersonalDetails;
+import india.lingayat.we.models.UserPersonalDetails_;
+import india.lingayat.we.models.User_;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;
@@ -14,6 +16,7 @@ public class UserSpecification {
         return new Specification<User>() {
             @Override
             public Predicate toPredicate(Root<User> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+
                 return criteriaBuilder.in(root);
             }
         };
@@ -24,16 +27,10 @@ public class UserSpecification {
             @Override
             public Predicate toPredicate(Root<User> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
 
-                Subquery<User> sq = criteriaQuery.subquery(User.class);
+                Join<User, UserPersonalDetails> personalJoin = root.join(User_.USER_PERSONAL_DETAILS);
+                Predicate heightBetweenPredicate = criteriaBuilder.between(personalJoin.get(UserPersonalDetails_.HEIGHT_IN_CMS),min, max);
 
-                Root<UserPersonalDetails> personal = sq.from(UserPersonalDetails.class);
-
-                Join<UserPersonalDetails, User> sqUser = personal.join("user");
-
-                sq.select(sqUser).where(criteriaBuilder.between(
-                        personal.get("heightInCms"), min, max));
-
-                return criteriaBuilder.in(root).value(sq);
+                return heightBetweenPredicate;
             }
         };
     }
@@ -50,18 +47,10 @@ public class UserSpecification {
                 Date minDate = new Date(minDateInMillis.getTime());
                 Date maxDate = new Date(maxDateInMillis.getTime());
 
-                LocalDate today = LocalDate.now();
+                Join<User, UserPersonalDetails> personalJoin = root.join(User_.USER_PERSONAL_DETAILS);
+                Predicate ageBetweenPredicate = criteriaBuilder.between(personalJoin.get(UserPersonalDetails_.DOB),maxDate, minDate);
 
-                Subquery<User> sq = criteriaQuery.subquery(User.class);
-
-                Root<UserPersonalDetails> personal = sq.from(UserPersonalDetails.class);
-
-                Join<UserPersonalDetails, User> sqUser = personal.join("user");
-
-                System.out.println(minDate);
-                ParameterExpression<Date> param = criteriaBuilder.parameter(Date.class, "minDate");
-                sq.select(sqUser).where(criteriaBuilder.lessThanOrEqualTo(personal.get("dob"), 786285360000L));
-                return criteriaBuilder.in(root).value(sq);
+                return ageBetweenPredicate;
             }
         };
     }

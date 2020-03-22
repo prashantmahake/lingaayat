@@ -1,7 +1,7 @@
-package in.lingayat.we.security;
+package india.lingayat.we.security;
 
-import in.lingayat.we.services.CustomUserDetailsService;
-import in.lingayat.we.services.JwtTokenProvider;
+import india.lingayat.we.services.CustomUserDetailsService;
+import india.lingayat.we.services.JwtTokenProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package in.lingayat.we.models;
+package india.lingayat.we.models;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import java.lang.annotation.*;

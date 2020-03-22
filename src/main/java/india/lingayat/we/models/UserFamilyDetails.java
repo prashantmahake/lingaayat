@@ -1,10 +1,11 @@
-package in.lingayat.we.models;
+package india.lingayat.we.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import in.lingayat.we.models.enums.JobType;
-import in.lingayat.we.models.enums.Relation;
+import india.lingayat.we.models.enums.JobType;
+import india.lingayat.we.models.enums.Relation;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name="user_family")
@@ -34,7 +35,6 @@ public class UserFamilyDetails {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
     private User user;
 
     public UserFamilyDetails() {
@@ -131,5 +131,20 @@ public class UserFamilyDetails {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserFamilyDetails that = (UserFamilyDetails) o;
+        return Objects.equals(firstName, that.firstName) &&
+                Objects.equals(lastName, that.lastName) &&
+                relation == that.relation;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, relation);
     }
 }

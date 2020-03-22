@@ -1,17 +1,17 @@
-package in.lingayat.we.controllers;
+package india.lingayat.we.controllers;
 
 
-import in.lingayat.we.exceptions.AppException;
-import in.lingayat.we.models.Role;
-import in.lingayat.we.models.enums.RoleName;
-import in.lingayat.we.models.User;
-import in.lingayat.we.payload.ApiResponse;
-import in.lingayat.we.payload.JwtAuthenticationResponse;
-import in.lingayat.we.payload.LoginRequest;
-import in.lingayat.we.payload.SignUpRequest;
-import in.lingayat.we.repositories.RoleRepository;
-import in.lingayat.we.repositories.UserRepository;
-import in.lingayat.we.services.JwtTokenProvider;
+import india.lingayat.we.exceptions.AppException;
+import india.lingayat.we.models.Role;
+import india.lingayat.we.models.enums.RoleName;
+import india.lingayat.we.models.User;
+import india.lingayat.we.payload.ApiResponse;
+import india.lingayat.we.payload.JwtAuthenticationResponse;
+import india.lingayat.we.payload.LoginRequest;
+import india.lingayat.we.payload.SignUpRequest;
+import india.lingayat.we.repositories.RoleRepository;
+import india.lingayat.we.repositories.UserRepository;
+import india.lingayat.we.services.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

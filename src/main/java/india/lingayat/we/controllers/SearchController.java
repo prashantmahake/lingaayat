@@ -1,21 +1,17 @@
-package in.lingayat.we.controllers;
+package india.lingayat.we.controllers;
 
-import com.querydsl.jpa.JPQLQuery;
-import com.querydsl.jpa.impl.JPAQuery;
-import in.lingayat.we.models.*;
-import in.lingayat.we.models.QUser;
-import in.lingayat.we.models.QUserPersonalDetails;
-import in.lingayat.we.models.UserPersonalDetails_;
-import in.lingayat.we.models.User_;
-import in.lingayat.we.models.enums.Qualification;
-import in.lingayat.we.payload.FilterRequest;
-import in.lingayat.we.payload.UserMinimumProjection;
-import in.lingayat.we.payload.UserMinimumView;
-import in.lingayat.we.repositories.*;
-import in.lingayat.we.specifications.UserSpecification;
+import com.querydsl.core.BooleanBuilder;
+import india.lingayat.we.models.*;
+import india.lingayat.we.models.UserPersonalDetails_;
+import india.lingayat.we.models.User_;
+import india.lingayat.we.payload.FilterRequest;
+import india.lingayat.we.payload.UserMinimumProjection;
+import india.lingayat.we.repositories.*;
+import india.lingayat.we.repositories.UserRepository;
+import india.lingayat.we.specifications.UserSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,7 +21,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
-import javax.ws.rs.PathParam;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,86 +38,55 @@ public class SearchController {
 
     @PostMapping("/getAllUsers")
     @PreAuthorize("hasRole('USER')")
-    public List<UserMinimumProjection> getAllUsers(Pageable pageable, @CurrentUser UserPrincipal currentUser, @RequestBody FilterRequest filterRequest) {
+    public Page<User> getAllUsers(Pageable pageable, @CurrentUser UserPrincipal currentUser, @RequestBody FilterRequest filterRequest) {
 
+        Specification<User> specification = Specification.where(UserSpecification.alwaysTrue());
 
-        Specification<User> specification = null;
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
 
-        if (filterRequest.getMaxHeight() != 0) {
+        booleanBuilder.and(QUser.user.id.ne(currentUser.getId()));
 
-            if(specification==null){
-                specification =  UserSpecification.hasHeightBetween(filterRequest.getMinHeight(), filterRequest.getMaxHeight());
-            }
-            else
-            {
-                specification = specification.and(
-                        UserSpecification.hasHeightBetween(filterRequest.getMinHeight(), filterRequest.getMaxHeight())
-                );
-            }
+        if (filterRequest.getMaxHeight() > 0) {
 
-
-        }
-
-        if (filterRequest.getMaxAge() != 0) {
-            specification = specification.and(
-                    UserSpecification.hasAgeBetween(filterRequest.getMinAge(), filterRequest.getMaxAge())
+            booleanBuilder.and(
+                    QUser.user.userPersonalDetails.heightInCms.between(
+                            filterRequest.getMinHeight(), filterRequest.getMaxHeight()
+                    )
             );
         }
 
-//        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-//
-//        CriteriaQuery<User> query = criteriaBuilder.createQuery(User.class);
-//        Root<User> userRoot = query.from(User.class);
-//
-//        Subquery<User> sq = query.subquery(User.class);
-//
-//        Root<UserPersonalDetails> personal = sq.from(UserPersonalDetails.class);
-//
-//        Join<UserPersonalDetails, User> sqUser = personal.join("user");
-//
-//        sq.select(sqUser).where(criteriaBuilder.greaterThanOrEqualTo(personal.get("dob"), criteriaBuilder.currentDate()));
-//
-//        query.select(userRoot).where(criteriaBuilder.in(userRoot.get("id")).value(sq));
-//
-//        List<User> users = em.createQuery(query).getResultList();
+        if (filterRequest.getMaxAge() > 0) {
 
-        Page<User> result = userRepository.findAll(
-                pageable);
-        List<Long> userIds = new ArrayList<>();
-        for (User u : result.getContent()) {
-            userIds.add(u.getId());
+            java.util.Date maxDateInMillis = new java.util.Date(System.currentTimeMillis() - (filterRequest.getMaxAge() * 1000L * 60L * 60L
+                    * 24L * 365L));
+            java.util.Date minDateInMillis = new java.util.Date(System.currentTimeMillis() - (filterRequest.getMinAge() * 1000L * 60L * 60L
+                    * 24L * 365L));
+
+            Date minDate = new Date(minDateInMillis.getTime());
+            Date maxDate = new Date(maxDateInMillis.getTime());
+
+            booleanBuilder.and(
+                    QUser.user.userPersonalDetails.dob.between(
+                            maxDate, minDate)
+                    );
+
         }
 
+        if(filterRequest.getMinSalary() > 0){
+            booleanBuilder.and(
+              QUser.user.userProfessionalDetails.monthlyIncome.goe(filterRequest.getMinSalary())
+            );
+        }
 
-        return userRepository.findAllUserMinimumView(userIds);
+        if(filterRequest.getQualification() != null && filterRequest.getQualification().size() !=0){
+            booleanBuilder.and(
+                    QUser.user.userEducationalDetails.qualification.in(filterRequest.getQualification())
+            );
+        }
 
-    }
+        Page<User> resultList = userRepository.findAll(booleanBuilder.getValue(), pageable);
 
-
-    @PostMapping("/getAllUsers1")
-    @PreAuthorize("hasRole('USER')")
-    public List<UserMinimumProjection> getAllUsers2(Pageable pageable, @RequestBody FilterRequest filterRequest){
-
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery query = cb.createQuery(User.class);
-
-        Root<UserPersonalDetails> personal = query.from(UserPersonalDetails.class);
-        Join<UserPersonalDetails, User> user = personal.join("user");
-
-        List<Predicate> predicates = new ArrayList<>();
-
-        predicates.add(cb.greaterThanOrEqualTo(personal.get("heightInCms"),filterRequest.getMinHeight()));
-
-        query.multiselect(user.get(User_.firstName),
-                personal.get("dob"));
-        query.where(predicates.stream().toArray(Predicate[]::new));
-
-        TypedQuery<UserMinimumProjection> typedQuery = em.createQuery(query);
-
-        List<UserMinimumProjection> resultList = typedQuery.getResultList();
-
-        return null;
+        return resultList;
 
     }
-
 }
