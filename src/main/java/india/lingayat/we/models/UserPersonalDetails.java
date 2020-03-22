@@ -18,7 +18,6 @@ public class UserPersonalDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @NotBlank
     private Date dob;
 
     @NotBlank
@@ -27,10 +26,8 @@ public class UserPersonalDetails {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-//    @NotBlank
     private Integer heightInCms;
 
-//    @NotBlank
     private Integer weightInKgs;
 
     @Enumerated(EnumType.STRING)

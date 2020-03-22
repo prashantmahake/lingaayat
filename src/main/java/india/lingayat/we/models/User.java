@@ -23,7 +23,7 @@ import java.util.Set;
                 "email"
         })
 })
-public class User extends DateAudit {
+public class User  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -151,4 +151,5 @@ public class User extends DateAudit {
     public void setMiddleName(String middleName) {
         this.middleName = middleName;
     }
+
 }

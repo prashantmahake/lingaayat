@@ -65,6 +65,7 @@ public class UserController {
 
         if (user != null ) {
             user.setFirstName(userFromRequest.getFirstName());
+            user.setMiddleName(userFromRequest.getMiddleName());
             user.setLastName(userFromRequest.getLastName());
             user.setContact(userFromRequest.getContact());
             user.setEmail(userFromRequest.getEmail());
