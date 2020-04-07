@@ -8,13 +8,16 @@ import india.lingayat.we.payload.FilterRequest;
 import india.lingayat.we.payload.UserMinimumProjection;
 import india.lingayat.we.repositories.*;
 import india.lingayat.we.repositories.UserRepository;
+import india.lingayat.we.services.CacheEvictionService;
 import india.lingayat.we.specifications.UserSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
@@ -32,8 +35,19 @@ public class SearchController {
     @Autowired
     private UserRepository userRepository;
 
+
+    @Autowired
+    private CacheEvictionService cacheEvictionService;
+
     @PersistenceContext
     EntityManager em;
+
+    @GetMapping("/evictCache")
+    @PreAuthorize("hasRole('USER')")
+    public void evictCache()
+    {
+        cacheEvictionService.evictCache();
+    }
 
 
     @PostMapping("/getAllUsers")
@@ -84,14 +98,15 @@ public class SearchController {
             );
         }
 
-        if(filterRequest.getFirstName() != null && filterRequest.getFirstName()!="")
+
+        if(!StringUtils.isEmpty(filterRequest.getFirstName()))
         {
             booleanBuilder.and(
                     QUser.user.firstName.likeIgnoreCase(filterRequest.getFirstName())
             );
         }
 
-        if(filterRequest.getLastName() != null && filterRequest.getLastName()!="")
+        if(!StringUtils.isEmpty(filterRequest.getLastName()))
         {
             booleanBuilder.and(
                     QUser.user.lastName.likeIgnoreCase(filterRequest.getLastName())
@@ -104,7 +119,7 @@ public class SearchController {
             );
         }
 
-        if(filterRequest.getCityNameOrPin() !=null && filterRequest.getCityNameOrPin()!="")
+        if(!StringUtils.isEmpty(filterRequest.getCityNameOrPin()))
         {
             if(isNumeric(filterRequest.getCityNameOrPin())){
                 booleanBuilder.and(
@@ -118,9 +133,9 @@ public class SearchController {
             }
         }
 
-        Page<User> resultList = userRepository.findAll(booleanBuilder.getValue(), pageable);
 
-        return resultList;
+
+        return userRepository.findAll(booleanBuilder.getValue(), pageable);
 
     }
 

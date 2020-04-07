@@ -22,7 +22,7 @@ public interface UserRepository extends JpaRepository<User, Long>, QuerydslPredi
     User findByEmail(String email);
 
     @Override
-    @Cacheable("users")
+    @Cacheable(value="users")
     Page<User> findAll(Predicate var1, Pageable var2);
 
     List<UserMinimumProjection> findAllBy(Specification<User> specification, Pageable pageable);
