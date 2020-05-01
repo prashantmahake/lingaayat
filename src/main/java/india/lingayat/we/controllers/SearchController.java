@@ -4,7 +4,9 @@ import com.querydsl.core.BooleanBuilder;
 import india.lingayat.we.models.*;
 import india.lingayat.we.models.UserPersonalDetails_;
 import india.lingayat.we.models.User_;
+import india.lingayat.we.models.enums.Gender;
 import india.lingayat.we.payload.FilterRequest;
+import india.lingayat.we.payload.UserCount;
 import india.lingayat.we.payload.UserMinimumProjection;
 import india.lingayat.we.repositories.*;
 import india.lingayat.we.repositories.UserRepository;
@@ -34,6 +36,9 @@ public class SearchController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserPersonalDetailsRepository userPersonalDetails;
 
 
     @Autowired
@@ -134,7 +139,6 @@ public class SearchController {
         }
 
 
-
         return userRepository.findAll(booleanBuilder.getValue(), pageable);
 
     }
@@ -149,5 +153,15 @@ public class SearchController {
             return false;
         }
         return true;
+    }
+
+    @GetMapping("/noauth/getUserCount")
+    public List<UserCount> getUserCount(){
+        List<UserCount> result =  new ArrayList<>();
+
+        result.add(new UserCount(Gender.GENDER_FEMALE, userPersonalDetails.countByGender(Gender.GENDER_FEMALE)));
+        result.add(new UserCount(Gender.GENDER_MALE, userPersonalDetails.countByGender(Gender.GENDER_MALE)));
+
+    return result;
     }
 }

@@ -2,6 +2,7 @@ package india.lingayat.we.repositories;
 
 import com.querydsl.core.types.Predicate;
 import india.lingayat.we.models.User;
+import india.lingayat.we.payload.UserCount;
 import india.lingayat.we.payload.UserMinimumProjection;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
