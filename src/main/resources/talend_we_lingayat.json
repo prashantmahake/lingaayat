@@ -1,0 +1,667 @@
+{
+    "version": 6,
+    "entities": [
+        {
+            "entity": {
+                "type": "Project",
+                "id": "741a37a2-5180-40b7-aadc-bb3b2bf7f4b0",
+                "name": "We_lingayat"
+            },
+            "children": [
+                {
+                    "entity": {
+                        "type": "Request",
+                        "method": {
+                            "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                            "name": "GET"
+                        },
+                        "body": {
+                            "formBody": {
+                                "overrideContentType": true,
+                                "encoding": "application/x-www-form-urlencoded",
+                                "items": []
+                            },
+                            "bodyType": "Text",
+                            "textBody": "{\n  \"gender\":\"GENDER_MALE\",\n  \"complextion\":\"COMPLEXION_DARK\",\n  \"maritalstatus\":\"MARITAL_STATUS_SINGLE\",\n  \"heightInCms\":\"174\",\n  \"weightInKgs\":\"80\",\n  \"dob\":\"1994-01-06\",\n  \"placeOfBirth\":\"kalyan\"\n}"
+                        },
+                        "uri": {
+                            "query": {
+                                "delimiter": "&",
+                                "items": []
+                            },
+                            "scheme": {
+                                "name": "http",
+                                "version": "V11"
+                            },
+                            "host": "localhost:8080",
+                            "path": "/api/user/get/aditionalDetails"
+                        },
+                        "id": "2e0a74dd-f1ad-44f6-a4a5-a62356b6ba69",
+                        "name": "GET_AdditionalDetails",
+                        "headers": [
+                            {
+                                "enabled": true,
+                                "name": "Authorization",
+                                "value": "Bearer ${\"token\"}"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "entity": {
+                        "type": "Request",
+                        "method": {
+                            "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                            "name": "GET"
+                        },
+                        "body": {
+                            "formBody": {
+                                "overrideContentType": true,
+                                "encoding": "application/x-www-form-urlencoded",
+                                "items": []
+                            },
+                            "bodyType": "Text",
+                            "textBody": "{\n  \"gender\":\"GENDER_MALE\",\n  \"complextion\":\"COMPLEXION_DARK\",\n  \"maritalstatus\":\"MARITAL_STATUS_SINGLE\",\n  \"heightInCms\":\"174\",\n  \"weightInKgs\":\"80\",\n  \"dob\":\"1994-01-06\",\n  \"placeOfBirth\":\"kalyan\"\n}"
+                        },
+                        "uri": {
+                            "query": {
+                                "delimiter": "&",
+                                "items": []
+                            },
+                            "scheme": {
+                                "name": "http",
+                                "version": "V11"
+                            },
+                            "host": "localhost:8080",
+                            "path": "/api/user/get/educationalDetails"
+                        },
+                        "id": "eb41239a-97b2-4e43-8e67-f737acc011a1",
+                        "name": "GET_EducationalDetails",
+                        "headers": [
+                            {
+                                "enabled": true,
+                                "name": "Authorization",
+                                "value": "Bearer ${\"token\"}"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "entity": {
+                        "type": "Request",
+                        "method": {
+                            "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                            "name": "GET"
+                        },
+                        "body": {
+                            "formBody": {
+                                "overrideContentType": true,
+                                "encoding": "application/x-www-form-urlencoded",
+                                "items": []
+                            },
+                            "bodyType": "Text",
+                            "textBody": "{\n  \"gender\":\"GENDER_MALE\",\n  \"complextion\":\"COMPLEXION_DARK\",\n  \"maritalstatus\":\"MARITAL_STATUS_SINGLE\",\n  \"heightInCms\":\"174\",\n  \"weightInKgs\":\"80\",\n  \"dob\":\"1994-01-06\",\n  \"placeOfBirth\":\"kalyan\"\n}"
+                        },
+                        "uri": {
+                            "query": {
+                                "delimiter": "&",
+                                "items": []
+                            },
+                            "scheme": {
+                                "name": "http",
+                                "version": "V11"
+                            },
+                            "host": "localhost:8080",
+                            "path": "/api/user/get/userFamilyDetails"
+                        },
+                        "id": "2a5821f0-8ce9-45d3-ad4b-c530f1f318dd",
+                        "name": "GET_FamilyDetails",
+                        "headers": [
+                            {
+                                "enabled": true,
+                                "name": "Authorization",
+                                "value": "Bearer ${\"token\"}"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "entity": {
+                        "type": "Request",
+                        "method": {
+                            "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                            "name": "GET"
+                        },
+                        "body": {
+                            "formBody": {
+                                "overrideContentType": true,
+                                "encoding": "application/x-www-form-urlencoded",
+                                "items": []
+                            },
+                            "bodyType": "Text",
+                            "textBody": "{\n  \"gender\":\"GENDER_MALE\",\n  \"complextion\":\"COMPLEXION_DARK\",\n  \"maritalstatus\":\"MARITAL_STATUS_SINGLE\",\n  \"heightInCms\":\"174\",\n  \"weightInKgs\":\"80\",\n  \"dob\":\"1994-01-06\",\n  \"placeOfBirth\":\"kalyan\"\n}"
+                        },
+                        "uri": {
+                            "query": {
+                                "delimiter": "&",
+                                "items": []
+                            },
+                            "scheme": {
+                                "name": "http",
+                                "version": "V11"
+                            },
+                            "host": "localhost:8080",
+                            "path": "/api/user/get/medicalDetails"
+                        },
+                        "id": "1d92e2c2-d866-43e6-bc16-d5272a67c8fc",
+                        "name": "GET_MedicalDetails",
+                        "headers": [
+                            {
+                                "enabled": true,
+                                "name": "Authorization",
+                                "value": "Bearer ${\"token\"}"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "entity": {
+                        "type": "Request",
+                        "method": {
+                            "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                            "name": "GET"
+                        },
+                        "body": {
+                            "formBody": {
+                                "overrideContentType": true,
+                                "encoding": "application/x-www-form-urlencoded",
+                                "items": []
+                            },
+                            "bodyType": "Text",
+                            "textBody": "{\n  \"gender\":\"GENDER_MALE\",\n  \"complextion\":\"COMPLEXION_DARK\",\n  \"maritalstatus\":\"MARITAL_STATUS_SINGLE\",\n  \"heightInCms\":\"174\",\n  \"weightInKgs\":\"80\",\n  \"dob\":\"1994-01-06\",\n  \"placeOfBirth\":\"kalyan\"\n}"
+                        },
+                        "uri": {
+                            "query": {
+                                "delimiter": "&",
+                                "items": []
+                            },
+                            "scheme": {
+                                "name": "http",
+                                "version": "V11"
+                            },
+                            "host": "localhost:8080",
+                            "path": "/api/user/get/personalDetails"
+                        },
+                        "id": "e468d975-3f31-4b1b-ba8f-8512d461be1d",
+                        "name": "GET_PersonalDetails",
+                        "headers": [
+                            {
+                                "enabled": true,
+                                "name": "Authorization",
+                                "value": "Bearer ${\"token\"}"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "entity": {
+                        "type": "Request",
+                        "method": {
+                            "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+                            "name": "GET"
+                        },
+                        "body": {
+                            "formBody": {
+                                "overrideContentType": true,
+                                "encoding": "application/x-www-form-urlencoded",
+                                "items": []
+                            },
+                            "bodyType": "Text",
+                            "textBody": "{\n  \"gender\":\"GENDER_MALE\",\n  \"complextion\":\"COMPLEXION_DARK\",\n  \"maritalstatus\":\"MARITAL_STATUS_SINGLE\",\n  \"heightInCms\":\"174\",\n  \"weightInKgs\":\"80\",\n  \"dob\":\"1994-01-06\",\n  \"placeOfBirth\":\"kalyan\"\n}"
+                        },
+                        "uri": {
+                            "query": {
+                                "delimiter": "&",
+                                "items": []
+                            },
+                            "scheme": {
+                                "name": "http",
+                                "version": "V11"
+                            },
+                            "host": "localhost:8080",
+                            "path": "/api/user/get/professionalDetails"
+                        },
+                        "id": "e9be4e88-6438-459c-8e5b-53509d7e483e",
+                        "name": "GET_ProfessionalDetails",
+                        "headers": [
+                            {
+                                "enabled": true,
+                                "name": "Authorization",
+                                "value": "Bearer ${\"token\"}"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "entity": {
+                        "type": "Request",
+                        "method": {
+                            "requestBody": true,
+                            "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                            "name": "POST"
+                        },
+                        "body": {
+                            "formBody": {
+                                "overrideContentType": true,
+                                "encoding": "application/x-www-form-urlencoded",
+                                "items": []
+                            },
+                            "bodyType": "Text",
+                            "textBody": "{\n  \"currentAddressLine1\":\"Address Line 1\",\n  \"currentAddressLine2\":\"\",\n  \"currentCity\":\"Kalyan\",\n  \"currentPinCode\":\"421301\",\n  \"permanentAddressLine1\":\"Address Line 1\",\n  \"permanentAddressLine2\":\"\",\n  \"permanentCity\":\"Kalyan\",\n  \"permanentPinCode\":\"421301\",\n  \"additionalDetails1\":\"Hobbies and else\",\n  \"additionalDetails2\":\"\"\n  \n}"
+                        },
+                        "uri": {
+                            "query": {
+                                "delimiter": "&",
+                                "items": []
+                            },
+                            "scheme": {
+                                "name": "http",
+                                "version": "V11"
+                            },
+                            "host": "localhost:8080",
+                            "path": "/api/user/save/additionalDetails"
+                        },
+                        "id": "b3900042-3e29-4c6a-b0ca-28bb74f70b65",
+                        "name": "Save_AdditionalDetails",
+                        "headers": [
+                            {
+                                "enabled": true,
+                                "name": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "enabled": true,
+                                "name": "Authorization",
+                                "value": "Bearer ${\"token\"}"
+                            }
+                        ],
+                        "assertions": [
+                            {
+                                "comparison": "Exists",
+                                "subject": "ResponseBody",
+                                "enabled": false,
+                                "path": "content",
+                                "value": ""
+                            }
+                        ]
+                    }
+                },
+                {
+                    "entity": {
+                        "type": "Request",
+                        "method": {
+                            "requestBody": true,
+                            "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                            "name": "POST"
+                        },
+                        "body": {
+                            "formBody": {
+                                "overrideContentType": true,
+                                "encoding": "application/x-www-form-urlencoded",
+                                "items": []
+                            },
+                            "bodyType": "Text",
+                            "textBody": "{\n  \"qualification\":\"QUALIFICATION_OTHER\",\n  \"other_qualification\":\"ITI\",\n  \"institute\":\"MUMBAI UNIVERSITY\"\n}"
+                        },
+                        "uri": {
+                            "query": {
+                                "delimiter": "&",
+                                "items": []
+                            },
+                            "scheme": {
+                                "name": "http",
+                                "version": "V11"
+                            },
+                            "host": "localhost:8080",
+                            "path": "/api/user/save/educationalDetails"
+                        },
+                        "id": "69ba79e2-dec0-41a5-9fdf-89d681d5e42a",
+                        "name": "Save_EducationalDetails",
+                        "headers": [
+                            {
+                                "enabled": true,
+                                "name": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "enabled": true,
+                                "name": "Authorization",
+                                "value": "Bearer ${\"token\"}"
+                            }
+                        ],
+                        "assertions": [
+                            {
+                                "comparison": "Exists",
+                                "subject": "ResponseBody",
+                                "enabled": false,
+                                "path": "content",
+                                "value": ""
+                            }
+                        ]
+                    }
+                },
+                {
+                    "entity": {
+                        "type": "Request",
+                        "method": {
+                            "requestBody": true,
+                            "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                            "name": "POST"
+                        },
+                        "body": {
+                            "formBody": {
+                                "overrideContentType": true,
+                                "encoding": "application/x-www-form-urlencoded",
+                                "items": []
+                            },
+                            "bodyType": "Text",
+                            "textBody": "{\n  \"title\":\"Dr\",\n  \"firstName\":\"Manjula\",\n  \"middleName\":\"S\",\n  \"lastName\":\"Maniyal\",\n  \"relation\":\"RELATION_MOTHER\",\n  \"isMarried\":\"true\",\n  \"profession\":\"JOB_TYPE_BUSINESS\"\n}"
+                        },
+                        "uri": {
+                            "query": {
+                                "delimiter": "&",
+                                "items": []
+                            },
+                            "scheme": {
+                                "name": "http",
+                                "version": "V11"
+                            },
+                            "host": "localhost:8080",
+                            "path": "/api/user/save/userFamilyDetails"
+                        },
+                        "id": "7c19ed6f-9caf-47e0-8fdd-dde78615390c",
+                        "name": "Save_FamilyDetails",
+                        "headers": [
+                            {
+                                "enabled": true,
+                                "name": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "enabled": true,
+                                "name": "Authorization",
+                                "value": "Bearer ${\"token\"}"
+                            }
+                        ],
+                        "assertions": [
+                            {
+                                "comparison": "Exists",
+                                "subject": "ResponseBody",
+                                "enabled": false,
+                                "path": "content",
+                                "value": ""
+                            }
+                        ]
+                    }
+                },
+                {
+                    "entity": {
+                        "type": "Request",
+                        "method": {
+                            "requestBody": true,
+                            "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                            "name": "POST"
+                        },
+                        "body": {
+                            "formBody": {
+                                "overrideContentType": true,
+                                "encoding": "application/x-www-form-urlencoded",
+                                "items": []
+                            },
+                            "bodyType": "Text",
+                            "textBody": "{\n  \"bloodGroup\":\"BLOOD_GROUP_A_POS\",\n  \"isDisabled\":false\n}"
+                        },
+                        "uri": {
+                            "query": {
+                                "delimiter": "&",
+                                "items": []
+                            },
+                            "scheme": {
+                                "name": "http",
+                                "version": "V11"
+                            },
+                            "host": "localhost:8080",
+                            "path": "/api/user/save/medicalDetails"
+                        },
+                        "id": "8528f880-0ebc-48ad-aa12-1e76be9c4905",
+                        "name": "Save_Medical",
+                        "headers": [
+                            {
+                                "enabled": true,
+                                "name": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "enabled": true,
+                                "name": "Authorization",
+                                "value": "Bearer ${\"token\"}"
+                            }
+                        ],
+                        "assertions": [
+                            {
+                                "comparison": "Exists",
+                                "subject": "ResponseBody",
+                                "enabled": false,
+                                "path": "content",
+                                "value": ""
+                            }
+                        ]
+                    }
+                },
+                {
+                    "entity": {
+                        "type": "Request",
+                        "method": {
+                            "requestBody": true,
+                            "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                            "name": "POST"
+                        },
+                        "body": {
+                            "formBody": {
+                                "overrideContentType": true,
+                                "encoding": "application/x-www-form-urlencoded",
+                                "items": []
+                            },
+                            "bodyType": "Text",
+                            "textBody": "{\n  \"gender\":\"GENDER_MALE\",\n  \"complexion\":\"COMPLEXION_DARK\",\n  \"maritalStatus\":\"MARITAL_STATUS_SINGLE\",\n  \"heightInCms\":\"174\",\n  \"weightInKgs\":\"80\",\n  \"dob\":\"1994-01-06\",\n  \"placeOfBirth\":\"kalyan\"\n}"
+                        },
+                        "uri": {
+                            "query": {
+                                "delimiter": "&",
+                                "items": []
+                            },
+                            "scheme": {
+                                "name": "http",
+                                "version": "V11"
+                            },
+                            "host": "localhost:8080",
+                            "path": "/api/user/save/personalDetails"
+                        },
+                        "id": "316e5722-fe7d-441e-918e-18a80ff20ea8",
+                        "name": "Save_PersonalDetails",
+                        "headers": [
+                            {
+                                "enabled": true,
+                                "name": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "enabled": true,
+                                "name": "Authorization",
+                                "value": "Bearer ${\"token\"}"
+                            }
+                        ],
+                        "assertions": [
+                            {
+                                "comparison": "Exists",
+                                "subject": "ResponseBody",
+                                "enabled": false,
+                                "path": "content",
+                                "value": ""
+                            }
+                        ]
+                    }
+                },
+                {
+                    "entity": {
+                        "type": "Request",
+                        "method": {
+                            "requestBody": true,
+                            "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                            "name": "POST"
+                        },
+                        "body": {
+                            "formBody": {
+                                "overrideContentType": true,
+                                "encoding": "application/x-www-form-urlencoded",
+                                "items": []
+                            },
+                            "bodyType": "Text",
+                            "textBody": "{\n  \"jobType\":\"JOB_TYPE_SALARIED\",\n  \"jobRole\":\"Senior Software Engineer\",\n  \"monthlyIncome\":\"65000\",\n  \"jobLocation\":\"Lower Parel\",\n  \"jobIndustry\":\"IT\"\n}"
+                        },
+                        "uri": {
+                            "query": {
+                                "delimiter": "&",
+                                "items": []
+                            },
+                            "scheme": {
+                                "name": "http",
+                                "version": "V11"
+                            },
+                            "host": "localhost:8080",
+                            "path": "/api/user/save/professionalDetails"
+                        },
+                        "id": "3002ea64-d539-4d3a-9102-1d084c4fde79",
+                        "name": "Save_ProfessionalDetails",
+                        "headers": [
+                            {
+                                "enabled": true,
+                                "name": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "enabled": true,
+                                "name": "Authorization",
+                                "value": "Bearer ${\"token\"}"
+                            }
+                        ],
+                        "assertions": [
+                            {
+                                "comparison": "Exists",
+                                "subject": "ResponseBody",
+                                "enabled": false,
+                                "path": "content",
+                                "value": ""
+                            }
+                        ]
+                    }
+                },
+                {
+                    "entity": {
+                        "type": "Request",
+                        "method": {
+                            "requestBody": true,
+                            "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                            "name": "POST"
+                        },
+                        "body": {
+                            "formBody": {
+                                "overrideContentType": true,
+                                "encoding": "application/x-www-form-urlencoded",
+                                "items": []
+                            },
+                            "bodyType": "Text",
+                            "textBody": "{\n  \"usernameOrEmail\":\"maniyalraj@gmail.com\",\n  \"password\":\"password\"\n}"
+                        },
+                        "uri": {
+                            "query": {
+                                "delimiter": "&",
+                                "items": []
+                            },
+                            "scheme": {
+                                "name": "http",
+                                "version": "V11"
+                            },
+                            "host": "localhost:8080",
+                            "path": "/api/auth/signin"
+                        },
+                        "id": "1bf51e32-3a84-4297-be00-1441be98317e",
+                        "name": "SignIn",
+                        "headers": [
+                            {
+                                "enabled": true,
+                                "name": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "entity": {
+                        "type": "Request",
+                        "method": {
+                            "requestBody": true,
+                            "link": "http://tools.ietf.org/html/rfc7231#section-4.3.3",
+                            "name": "POST"
+                        },
+                        "body": {
+                            "formBody": {
+                                "overrideContentType": true,
+                                "encoding": "application/x-www-form-urlencoded",
+                                "items": []
+                            },
+                            "bodyType": "Text",
+                            "textBody": "{\n  \"name\":\"Rajendra Maniyal\",\n  \"email\":\"maniyalraj@gmail.com\",\n  \"username\":\"maniyalraj@gmail.com\",\n  \"contact\":\"8879126454\",\n  \"password\":\"password\"\n}"
+                        },
+                        "uri": {
+                            "query": {
+                                "delimiter": "&",
+                                "items": []
+                            },
+                            "scheme": {
+                                "name": "http",
+                                "version": "V11"
+                            },
+                            "host": "localhost:8080",
+                            "path": "/api/auth/signup"
+                        },
+                        "id": "8bf0a37d-5c31-4a65-8c7e-0922d0ee802d",
+                        "name": "Signup",
+                        "headers": [
+                            {
+                                "enabled": true,
+                                "name": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ],
+    "environments": [
+        {
+            "id": "286fa87b-893a-40de-9d08-5318bf4b34fe",
+            "name": "Local",
+            "variables": {
+                "df52fad0-28ff-4604-bc2a-8236a7e1808e": {
+                    "createdAt": "2020-02-21T14:07:27.273+05:30",
+                    "name": "token",
+                    "value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTgyMjc2OTUxLCJleHAiOjE1ODI4ODE3NTF9.kpiD_IdJYGcEn1Bs8aU4wUOhzvTiUrkt03LM3xgt97vOg_vnFuJg8pffQC1w5p4OTXti__S0MoA2-ZRBJ3bpMA",
+                    "enabled": true,
+                    "private": false
+                }
+            }
+        }
+    ]
+}
