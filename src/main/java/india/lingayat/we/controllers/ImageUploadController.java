@@ -10,6 +10,7 @@ import india.lingayat.we.payload.ApiResponse;
 import india.lingayat.we.repositories.UserImageRepository;
 import india.lingayat.we.repositories.UserRepository;
 import india.lingayat.we.services.ClouditonaryImageService;
+import india.lingayat.we.services.S3ImageUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,10 +25,13 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
-public class ClouditonaryImageController {
+public class ImageUploadController {
 
     @Autowired
     private ClouditonaryImageService clouditonaryImageService;
+
+    @Autowired
+    private S3ImageUploadService s3ImageUploadService;
 
     @Autowired
     private UserImageRepository userImageRepository;
@@ -45,13 +49,8 @@ public class ClouditonaryImageController {
 
         User user = userRepository.findByEmail(currentUser.getEmail());
 
-        try {
-
-            uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
-        }
-        catch (IOException e){
-            return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        //            uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
+        uploadResult = s3ImageUploadService.uploadImage(file, user);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/api/upload/image")
                 .buildAndExpand("image").toUri();
